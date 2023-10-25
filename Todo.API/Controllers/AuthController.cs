@@ -15,6 +15,7 @@ namespace Todo.API.Controllers
             _authService = authService;
         }
 
+        // POST api/auth/login
         [HttpPost("login")]
         public IActionResult Login([FromBody] UserCredentials credentials)
         {
@@ -25,6 +26,13 @@ namespace Todo.API.Controllers
 
             var token = _authService.GenerateJwtToken(user);
             return Ok(new { Token = token });
+        }
+
+        // POST api/auth/register
+        [HttpPost("register")]
+        public async Task<ActionResult<User>> Post(User user)
+        {
+            return Ok();
         }
     }
 }
