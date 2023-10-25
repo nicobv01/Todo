@@ -1,4 +1,4 @@
-﻿namespace Todo.API.Repositories
+﻿namespace Todo.API.Repositories.Task
 {
     public class TaskRepository
     {
