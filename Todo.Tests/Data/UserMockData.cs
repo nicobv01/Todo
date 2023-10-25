@@ -4,6 +4,17 @@ namespace Todo.Tests.Data
 {
     public class UserMockData
     {
+        public static UserCredentials GetUserCredentials()
+        {
+            var user = new UserCredentials
+            {
+                Username = "test",
+                Password = "test"
+            };
+
+            return user;
+        }
+
         public static User GetUser()
         {
             var user = new User
