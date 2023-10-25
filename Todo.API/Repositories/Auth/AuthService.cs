@@ -36,7 +36,6 @@ namespace Todo.API.Repositories.Auth
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim("userId", user.Id.ToString()),
                 new Claim("Username", user.Username.ToString()),
                 new Claim("Name", user.Name.ToString())
                 }),

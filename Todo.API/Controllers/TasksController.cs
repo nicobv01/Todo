@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Todo.API.Models;
 
 namespace Todo.API.Controllers
 {
@@ -8,11 +10,6 @@ namespace Todo.API.Controllers
     [ApiController]
     public class TasksController : Controller
     {
-        [HttpPost]
-        public IActionResult CreateTask()
-        {
-            return Ok();
-        }
 
     }
 }
