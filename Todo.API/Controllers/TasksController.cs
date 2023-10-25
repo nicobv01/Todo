@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Todo.API.Models;
+using Todo.API.Repositories.Task;
 
 namespace Todo.API.Controllers
 {
@@ -10,11 +11,25 @@ namespace Todo.API.Controllers
     [ApiController]
     public class TasksController : Controller
     {
+        private readonly ITaskRepository _taskRepository;
+
+        public TasksController(ITaskRepository taskRepository)
+        {
+            _taskRepository = taskRepository;
+        }
+
         //POST: api/task
         [HttpPost]
         public async Task<ActionResult<Item>> Post(Item item)
         {
-            return Ok();
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var result = await _taskRepository.Insert(item, userId);
+
+            if (!result)
+                return BadRequest();
+
+            return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
         }
 
         //GET: api/task
@@ -26,7 +41,7 @@ namespace Todo.API.Controllers
 
         //GET: api/task/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Item>> Get(int id)
+        public async Task<ActionResult<Item>> GetById(int id)
         {
             return Ok();
         }

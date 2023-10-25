@@ -1,9 +1,18 @@
 ﻿using Todo.API.Models;
+using Todo.API.Data;
+using System.Security.Claims;
 
 namespace Todo.API.Repositories.Task
 {
     public class TaskRepository : ITaskRepository
     {
+        private readonly AppDbContext _context;
+
+        public TaskRepository(AppDbContext context)
+        {
+            _context = context;
+        }
+
         Task<bool> ITaskRepository.Delete(int id)
         {
             throw new NotImplementedException();
@@ -19,9 +28,13 @@ namespace Todo.API.Repositories.Task
             throw new NotImplementedException();
         }
 
-        Task<bool> ITaskRepository.Insert(Item item)
+        public async Task<bool> Insert(Item item, int user_id)
         {
-            throw new NotImplementedException();
+            item.UserId = user_id;
+
+            var result = await _context.Tasks.AddAsync(item);
+            await _context.SaveChangesAsync();
+            return result != null;
         }
 
         Task<bool> ITaskRepository.Update(Item item)
