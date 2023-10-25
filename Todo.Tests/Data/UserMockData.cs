@@ -1,12 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Todo.API.Models;
 
 namespace Todo.Tests.Data
 {
     public class UserMockData
     {
+        public static User GetUser()
+        {
+            var user = new User
+            {
+                Id = 1,
+                Username = "test",
+                Password = "test",
+                Email = "Test@test.com",
+                Name = "User"
+            };
+
+            return user;
+        }
+
+        public static List<User> GetUsers()
+        {
+            var users = new List<User>
+            {
+                new User
+                {
+                    Id = 1,
+                    Username = "test",
+                    Password = "test",
+                    Email = "Test@test.com",
+                    Name = "User"
+                },
+                new User
+                {
+                    Id = 2,
+                    Username = "test2",
+                    Password = "test2",
+                    Email = "Test2@test.com",
+                    Name = "User2"
+                }
+            };
+
+            return users;
+        }
     }
 }
