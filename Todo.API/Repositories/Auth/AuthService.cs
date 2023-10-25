@@ -28,19 +28,22 @@ namespace Todo.API.Repositories.Auth
         public string GenerateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var secret = _configuration["Jwt:SecretKey"];
+            var secret =  _configuration["Jwt:SecretKey"];
             var key = Encoding.ASCII.GetBytes(secret);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim("userId", user.Id.ToString()),
                 new Claim("Username", user.Username.ToString()),
                 new Claim("Name", user.Name.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(10),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                Issuer = _configuration["Jwt:Issuer"],
+                Audience = _configuration["Jwt:Audience"]
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
