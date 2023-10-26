@@ -4,13 +4,16 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using Todo.API.Data;
-using Todo.API.Repositories.Auth;
+using Todo.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnectionString")));

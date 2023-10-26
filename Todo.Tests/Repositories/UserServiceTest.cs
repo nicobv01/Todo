@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Todo.API.Data;
-using Todo.API.Models;
-using Todo.API.Repositories.Auth;
+using Todo.API.Repositories;
 using Todo.Tests.Data;
 using FluentAssertions;
 
@@ -22,7 +21,6 @@ namespace Todo.Tests.Repositories
 
             _context = new AppDbContext(options);
 
-            _context.Tasks.AddRange(ItemMockData.getItems());
             _context.Users.AddRange(UserMockData.GetUsers());
             _context.SaveChanges();
 

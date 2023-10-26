@@ -2,29 +2,27 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Todo.API.Models;
-using Todo.API.Repositories.Task;
+using Todo.API.Repositories;
 
 namespace Todo.API.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class TasksController : Controller
+    public class ItemsController : Controller
     {
-        private readonly ITaskRepository _taskRepository;
+        private readonly IItemRepository _itemRepository;
 
-        public TasksController(ITaskRepository taskRepository)
+        public ItemsController(IItemRepository itemRepository)
         {
-            _taskRepository = taskRepository;
+            _itemRepository = itemRepository;
         }
 
-        //POST: api/task
+        //POST: api/item
         [HttpPost]
         public async Task<ActionResult<Item>> Post(Item item)
         {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            var result = await _taskRepository.Insert(item, userId);
+            var result = await _itemRepository.Insert(item);
 
             if (!result)
                 return BadRequest();
@@ -32,28 +30,28 @@ namespace Todo.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
         }
 
-        //GET: api/task
+        //GET: api/item
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Item>>> Get()
         {
             return Ok();
         }
 
-        //GET: api/task/5
+        //GET: api/item/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Item>> GetById(int id)
         {
             return Ok();
         }
 
-        //PUT: api/task/5
+        //PUT: api/item/5
         [HttpPut("{id}")]
         public async Task<ActionResult<Item>> Put(int id, Item item)
         {
             return Ok();
         }
 
-        //DELETE: api/task/5
+        //DELETE: api/item/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {

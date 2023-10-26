@@ -1,6 +1,6 @@
 ﻿using Todo.API.Models;
 
-namespace Todo.API.Repositories.Auth
+namespace Todo.API.Repositories
 {
     public interface IAuthService
     {

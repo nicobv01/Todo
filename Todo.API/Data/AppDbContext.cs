@@ -9,7 +9,7 @@ namespace Todo.API.Data
         {
 
         }
-        public DbSet<Item> Tasks { get; set; }
+        public DbSet<Item> Items { get; set; }
         public DbSet<User> Users { get; set; }
     }
 }

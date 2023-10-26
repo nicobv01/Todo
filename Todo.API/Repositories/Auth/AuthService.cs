@@ -5,7 +5,7 @@ using System.Text;
 using Todo.API.Data;
 using Todo.API.Models;
 
-namespace Todo.API.Repositories.Auth
+namespace Todo.API.Repositories
 {
     public class AuthService : IAuthService
     {

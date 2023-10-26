@@ -4,7 +4,7 @@ using Todo.Tests.Data;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Todo.API.Repositories.Auth;
+using Todo.API.Repositories;
 
 namespace Todo.Tests.Controllers
 {

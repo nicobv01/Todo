@@ -1,4 +1,5 @@
-﻿using Todo.API.Models;
+﻿using System.Threading.Tasks;
+using Todo.API.Models;
 
 namespace Todo.Tests.Data
 {
@@ -24,14 +25,14 @@ namespace Todo.Tests.Data
                 new Item
                 {
                     Id = 1,
-                    Title = "Test Item",
+                    Title = "Test item",
                     IsDone = false,
                     UserId = 1
                 },
                 new Item
                 {
                     Id = 2,
-                    Title = "Test Item 2",
+                    Title = "Test item 2",
                     IsDone = false,
                     UserId = 1
                 }

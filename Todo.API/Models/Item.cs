@@ -2,7 +2,7 @@
 
 namespace Todo.API.Models
 {
-    [Table("tasks")]
+    [Table("items")]
     public class Item
     {
         public int Id { get; set; }
