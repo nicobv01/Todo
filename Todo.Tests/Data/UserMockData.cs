@@ -19,7 +19,7 @@ namespace Todo.Tests.Data
         {
             var user = new User
             {
-                Id = 1,
+                Id = 3,
                 Username = "test",
                 Password = "test",
                 Email = "Test@test.com",

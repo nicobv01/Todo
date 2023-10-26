@@ -16,12 +16,13 @@ namespace Todo.Tests.Repositories
         public UserServiceTest()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: "TodoList")
+                .UseInMemoryDatabase(databaseName: "TodoList" + Guid.NewGuid())
                 .Options;
 
             _context = new AppDbContext(options);
 
             _context.Users.AddRange(UserMockData.GetUsers());
+            _context.Items.AddRange(ItemMockData.GetItems());
             _context.SaveChanges();
 
             _authService = new AuthService(_context, _configuration);

@@ -12,12 +12,11 @@ namespace Todo.Tests.Repositories
     {
         private readonly AppDbContext _context;
         private readonly IItemRepository _itemRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public ItemRepositoryTest()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: "TodoList")
+                .UseInMemoryDatabase(databaseName: "TodoList" + Guid.NewGuid())
                 .Options;
 
             _context = new AppDbContext(options);
@@ -26,7 +25,7 @@ namespace Todo.Tests.Repositories
             _context.Items.AddRange(ItemMockData.GetItems());
             _context.SaveChanges();
 
-            _itemRepository = new ItemRepository(_context, _httpContextAccessor);
+            _itemRepository = new ItemRepository(_context, new UserContextFake());
         }
 
         public void Dispose()
@@ -52,10 +51,9 @@ namespace Todo.Tests.Repositories
         {
             // Arrange
             var item = ItemMockData.GetItem();
-            item.UserId = 0;
 
             // Act
-            var result = await _itemRepository.Insert(item);
+            var result = await _itemRepository.Insert(null);
 
             // Assert
             result.Should().BeFalse();

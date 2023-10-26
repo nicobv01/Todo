@@ -2,33 +2,34 @@
 using Todo.API.Data;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Todo.API.Repositories;
 
 namespace Todo.API.Repositories
 {
     public class ItemRepository : IItemRepository
     {
         private readonly AppDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserContext _userContext;
 
-        public ItemRepository(AppDbContext context, IHttpContextAccessor httpContextAccessor)
+        public ItemRepository(AppDbContext context, IUserContext userContext)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
-        }
-
-        private int GetUserIdFromToken()
-        {
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return int.Parse(userId);
+            _userContext = userContext;
         }
 
         public async Task<bool> Insert(Item item)
         {
-            item.UserId = GetUserIdFromToken(); ;
+            try
+            {
+                item.UserId = _userContext.GetCurrentUserId();
+                var result = await _context.Items.AddAsync(item);
+                await _context.SaveChangesAsync();
+            }catch
+            {
+                return false;
+            }
 
-            var result = await _context.Items.AddAsync(item);
-            await _context.SaveChangesAsync();
-            return result != null;
+            return true;
         }
     }
 }

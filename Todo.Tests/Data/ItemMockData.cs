@@ -9,7 +9,7 @@ namespace Todo.Tests.Data
         {
             var item = new Item
             {
-                Id = 1,
+                Id = 3,
                 Title = "Test Item",
                 IsDone = false,
                 UserId = 1
