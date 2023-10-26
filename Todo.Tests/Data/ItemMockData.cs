@@ -5,7 +5,7 @@ namespace Todo.Tests.Data
 {
     public class ItemMockData
     {
-        public static Item getItem()
+        public static Item GetItem()
         {
             var item = new Item
             {
@@ -18,7 +18,7 @@ namespace Todo.Tests.Data
             return item;
         }
 
-        public static List<Item> getItems()
+        public static List<Item> GetItems()
         {
             var items = new List<Item>
             {

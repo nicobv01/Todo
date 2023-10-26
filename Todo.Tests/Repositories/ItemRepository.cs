@@ -4,16 +4,17 @@ using Todo.API.Data;
 using Todo.API.Repositories;
 using Todo.Tests.Data;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 
 namespace Todo.Tests.Repositories
 {
-    public class UserServiceTest : IDisposable
+    public class ItemRepositoryTest : IDisposable
     {
         private readonly AppDbContext _context;
-        private readonly IAuthService _authService;
-        private readonly IConfiguration _configuration;
+        private readonly IItemRepository _itemRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserServiceTest()
+        public ItemRepositoryTest()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "TodoList")
@@ -22,9 +23,10 @@ namespace Todo.Tests.Repositories
             _context = new AppDbContext(options);
 
             _context.Users.AddRange(UserMockData.GetUsers());
+            _context.Items.AddRange(ItemMockData.GetItems());
             _context.SaveChanges();
 
-            _authService = new AuthService(_context, _configuration);
+            _itemRepository = new ItemRepository(_context, _httpContextAccessor);
         }
 
         public void Dispose()
@@ -33,30 +35,31 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Authenticate_ValidUser_ShouldSucceed()
+        public async Task Insert_ValidItem_ShouldSucceed()
         {
             // Arrange
-            var userCredentials = UserMockData.GetUserCredentials();
+            var item = ItemMockData.GetItem();
 
             // Act
-            var result = _authService.Authenticate(userCredentials.Username, userCredentials.Password);
+            var result = await _itemRepository.Insert(item);
 
             // Assert
-            result.Should().NotBeNull();
-            result.Username.Should().Be(userCredentials.Username);
+            result.Should().BeTrue();
         }
 
         [Fact]
-        public async Task Authenticate_InvalidUser_ShouldFail()
+        public async Task Insert_InvalidItem_ShouldFail()
         {
             // Arrange
-            var userCredentials = UserMockData.GetUserCredentials();
+            var item = ItemMockData.GetItem();
+            item.UserId = 0;
 
             // Act
-            var result = _authService.Authenticate(userCredentials.Username, "invalid");
+            var result = await _itemRepository.Insert(item);
 
             // Assert
-            result.Should().BeNull();
+            result.Should().BeFalse();
         }
+
     }
 }
