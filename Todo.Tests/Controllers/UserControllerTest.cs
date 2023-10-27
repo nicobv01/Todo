@@ -42,5 +42,41 @@ namespace Todo.Tests.Controllers
             // Assert
             result.StatusCode.Should().Be(401);
         }
+
+        [Fact]
+        public async Task Register_ShouldReturn201Status()
+        {
+            // Arrange
+            var user = UserMockData.GetUser();
+            var authService = Substitute.For<IAuthService>();
+            authService.Register(user).Returns(true);
+            var controller = new AuthController(authService);
+
+            // Act
+            var result = await controller.Register(user);
+
+            // Assert
+            result.Should().BeOfType<ActionResult<User>>()
+               .Which.Result.Should().BeOfType<StatusCodeResult>()
+               .Which.StatusCode.Should().Be(201);
+        }
+
+        [Fact]
+        public async Task Register_ShouldReturn400Status()
+        {
+            // Arrange
+            var user = UserMockData.GetUser();
+            var authService = Substitute.For<IAuthService>();
+            authService.Register(user).Returns(false);
+            var controller = new AuthController(authService);
+
+            // Act
+            var result = await controller.Register(user);
+
+            // Assert
+            result.Should().BeOfType<ActionResult<User>>()
+               .Which.Result.Should().BeOfType<BadRequestResult>()
+               .Which.StatusCode.Should().Be(400);
+        }
     }
 }
