@@ -59,5 +59,32 @@ namespace Todo.Tests.Repositories
             // Assert
             result.Should().BeNull();
         }
+
+        [Fact]
+        public async Task Register_ValidUser_ShouldBeTrue()
+        {
+            // Arrange
+            var user = UserMockData.GetUser();
+
+            // Act
+            var result = await _authService.Register(user);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public async Task Register_InvalidUser_ShouldBeFalse()
+        {
+            // Arrange
+            var user = UserMockData.GetUser();
+            user.Username = null;
+
+            // Act
+            var result = await _authService.Register(user);
+
+            // Assert
+            result.Should().BeFalse();
+        }
     }
 }
