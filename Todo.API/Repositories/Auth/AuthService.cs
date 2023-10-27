@@ -48,5 +48,20 @@ namespace Todo.API.Repositories
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
+        public async Task<bool> Register(User user)
+        {
+            try
+            {
+                var result = await _context.Users.AddAsync(user);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

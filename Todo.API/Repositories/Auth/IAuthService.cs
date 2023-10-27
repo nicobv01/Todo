@@ -6,5 +6,6 @@ namespace Todo.API.Repositories
     {
         User Authenticate(string username, string password);
         string GenerateJwtToken(User user);
+        Task<bool> Register(User user);
     }
 }
