@@ -17,7 +17,7 @@ namespace Todo.Tests.Controllers
             var userCredentials = UserMockData.GetUserCredentials();
             var user = UserMockData.GetUser();
             var authService = Substitute.For<IAuthService>();
-            authService.Authenticate(user.Username, user.Password).Returns(user);
+            authService.Authenticate(userCredentials.Username, userCredentials.Password).Returns(user);
             var controller = new AuthController(authService);
 
             // Act
