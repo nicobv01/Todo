@@ -4,6 +4,8 @@ namespace Todo.Tests.Data
 {
     public class UserMockData
     {
+        private static readonly string _password = BCrypt.Net.BCrypt.HashPassword("test");
+
         public static UserCredentials GetUserCredentials()
         {
             var user = new UserCredentials
@@ -21,7 +23,7 @@ namespace Todo.Tests.Data
             {
                 Id = 3,
                 Username = "test",
-                Password = BCrypt.Net.BCrypt.HashPassword("test"),
+                Password = _password,
                 Email = "Test@test.com",
                 Name = "User"
             };
@@ -37,7 +39,7 @@ namespace Todo.Tests.Data
                 {
                     Id = 1,
                     Username = "test",
-                    Password = BCrypt.Net.BCrypt.HashPassword("test"),
+                    Password = _password,
                     Email = "Test@test.com",
                     Name = "User"
                 },
@@ -45,7 +47,7 @@ namespace Todo.Tests.Data
                 {
                     Id = 2,
                     Username = "test2",
-                    Password = BCrypt.Net.BCrypt.HashPassword("test"),
+                    Password = _password,
                     Email = "Test2@test.com",
                     Name = "User2"
                 }
