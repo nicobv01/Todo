@@ -30,9 +30,13 @@ namespace Todo.API.Controllers
 
         // POST api/auth/register
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Post(User user)
+        public async Task<ActionResult<User>> Register(User user)
         {
-            return Ok();
+            var result = await _authService.Register(user);
+            if (!result)
+                return BadRequest();
+
+            return StatusCode(201);
         }
     }
 }
