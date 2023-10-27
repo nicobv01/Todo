@@ -21,7 +21,7 @@ namespace Todo.Tests.Data
             {
                 Id = 3,
                 Username = "test",
-                Password = "test",
+                Password = BCrypt.Net.BCrypt.HashPassword("test"),
                 Email = "Test@test.com",
                 Name = "User"
             };
@@ -37,7 +37,7 @@ namespace Todo.Tests.Data
                 {
                     Id = 1,
                     Username = "test",
-                    Password = "test",
+                    Password = BCrypt.Net.BCrypt.HashPassword("test"),
                     Email = "Test@test.com",
                     Name = "User"
                 },
@@ -45,7 +45,7 @@ namespace Todo.Tests.Data
                 {
                     Id = 2,
                     Username = "test2",
-                    Password = "test2",
+                    Password = BCrypt.Net.BCrypt.HashPassword("test"),
                     Email = "Test2@test.com",
                     Name = "User2"
                 }
