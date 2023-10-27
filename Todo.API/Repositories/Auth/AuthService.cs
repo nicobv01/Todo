@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -20,9 +21,13 @@ namespace Todo.API.Repositories
 
         public User Authenticate(string username, string password)
         {
-            var user = _context.Users.SingleOrDefault(u => u.Username == username && u.Password == password);
+            var user = _context.Users.SingleOrDefault(u => u.Username == username);
 
-            return user;
+            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
+            {
+                return user;
+            } 
+            return null;
         }
 
         public string GenerateJwtToken(User user)
@@ -53,6 +58,9 @@ namespace Todo.API.Repositories
         {
             try
             {
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                user.Password = hashedPassword;
+
                 var result = await _context.Users.AddAsync(user);
                 _context.SaveChanges();
             }
