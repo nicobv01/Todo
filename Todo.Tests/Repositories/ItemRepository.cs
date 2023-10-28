@@ -59,5 +59,28 @@ namespace Todo.Tests.Repositories
             result.Should().BeFalse();
         }
 
+        [Fact]
+        public async Task CompleteTask_ShouldSucceed()
+        {
+            // Arrange
+            var item = ItemMockData.GetItemById(1);
+
+            // Act
+            var result = await _itemRepository.CompleteTask(item.Id);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public async Task CompleteTask_InvalidItem_ShouldFail()
+        {
+            // Act
+            var result = await _itemRepository.CompleteTask(0);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
     }
 }
