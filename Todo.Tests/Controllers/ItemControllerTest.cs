@@ -81,5 +81,24 @@ namespace Todo.Tests.Controllers
                .Which.StatusCode.Should().Be(404);
         }
 
+        [Fact]
+        public async Task CompleteTask_WithInvalidUserId_ShouldReturn404Status()
+        {
+            // Arrange
+            var item = ItemMockData.GetItemById(1);
+            item.UserId = 2;
+            var taskRepository = Substitute.For<IItemRepository>();
+            taskRepository.CompleteTask(item.Id).Returns(false);
+            var controller = new ItemsController(taskRepository);
+
+            // Act
+            var result = await controller.CompleteTask(item.Id);
+
+            // Assert
+            result.Should().BeOfType<ActionResult<Item>>();
+            result.As<ActionResult<Item>>().Result.Should().BeOfType<NotFoundResult>()
+               .Which.StatusCode.Should().Be(404);
+        }
+
     }
 }

@@ -34,8 +34,10 @@ namespace Todo.API.Repositories
 
         public async Task<bool> CompleteTask(int id)
         {
+            var UserId = _userContext.GetCurrentUserId();
+
             var item = await _context.Items.FindAsync(id);
-            if (item == null)
+            if (item == null || UserId != item.UserId)
             {
                 return false;
             }
