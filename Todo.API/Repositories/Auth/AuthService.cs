@@ -54,8 +54,32 @@ namespace Todo.API.Repositories
             return tokenHandler.WriteToken(token);
         }
 
+        private async Task<User> FindByEmail(string email)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+            return user;
+        }
+
+        private User FindByName(string username)
+        {
+            var user = _context.Users.SingleOrDefault(u => u.Username == username);
+            return user;
+        }
+
         public async Task<bool> Register(User user)
         {
+            var existingUser = await FindByEmail(user.Email);
+            if (existingUser != null)
+            {
+                return false;
+            }
+
+            existingUser = FindByName(user.Username);
+            if (existingUser != null)
+            {
+                return false;
+            }
+
             try
             {
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
