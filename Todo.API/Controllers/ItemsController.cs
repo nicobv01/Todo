@@ -44,7 +44,7 @@ namespace Todo.API.Controllers
             return Ok();
         }
 
-        //GET: api/item/5
+        //GET: api/item/complete/5
         [HttpPut("complete/{id}")]
         public async Task<ActionResult<Item>> CompleteTask(int id)
         {
