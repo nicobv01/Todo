@@ -18,6 +18,12 @@ namespace Todo.Tests.Data
             return item;
         }
 
+        public static Item GetItemById(int id)
+        {
+            var item = GetItems().FirstOrDefault(x => x.Id == id);
+            return item;
+        }
+
         public static List<Item> GetItems()
         {
             var items = new List<Item>

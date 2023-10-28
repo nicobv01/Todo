@@ -46,5 +46,59 @@ namespace Todo.Tests.Controllers
                .Which.StatusCode.Should().Be(400);
         }
 
+        [Fact]
+        public async Task CompleteTask_ShouldReturn200Status()
+        {
+            // Arrange
+            var item = ItemMockData.GetItemById(1);
+            var taskRepository = Substitute.For<IItemRepository>();
+            taskRepository.CompleteTask(item.Id).Returns(true);
+            var controller = new ItemsController(taskRepository);
+
+            // Act
+            var result = await controller.CompleteTask(item.Id);
+
+            // Assert
+            result.Should().BeOfType<ActionResult<Item>>();
+            result.As<ActionResult<Item>>().Result.Should().BeOfType<OkResult>()
+               .Which.StatusCode.Should().Be(200);
+        }
+
+        [Fact]
+        public async Task CompleteTask_ShouldReturn404Status()
+        {
+            // Arrange
+            var taskRepository = Substitute.For<IItemRepository>();
+            taskRepository.CompleteTask(0).Returns(false);
+            var controller = new ItemsController(taskRepository);
+
+            // Act
+            var result = await controller.CompleteTask(0);
+
+            // Assert
+            result.Should().BeOfType<ActionResult<Item>>();
+            result.As<ActionResult<Item>>().Result.Should().BeOfType<NotFoundResult>()
+               .Which.StatusCode.Should().Be(404);
+        }
+
+        [Fact]
+        public async Task CompleteTask_WithInvalidUserId_ShouldReturn404Status()
+        {
+            // Arrange
+            var item = ItemMockData.GetItemById(1);
+            item.UserId = 2;
+            var taskRepository = Substitute.For<IItemRepository>();
+            taskRepository.CompleteTask(item.Id).Returns(false);
+            var controller = new ItemsController(taskRepository);
+
+            // Act
+            var result = await controller.CompleteTask(item.Id);
+
+            // Assert
+            result.Should().BeOfType<ActionResult<Item>>();
+            result.As<ActionResult<Item>>().Result.Should().BeOfType<NotFoundResult>()
+               .Which.StatusCode.Should().Be(404);
+        }
+
     }
 }

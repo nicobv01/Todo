@@ -31,5 +31,21 @@ namespace Todo.API.Repositories
 
             return true;
         }
+
+        public async Task<bool> CompleteTask(int id)
+        {
+            var UserId = _userContext.GetCurrentUserId();
+
+            var item = await _context.Items.FindAsync(id);
+            if (item == null || UserId != item.UserId)
+            {
+                return false;
+            }
+
+            item.IsDone = true;
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
