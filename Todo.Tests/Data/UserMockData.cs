@@ -22,10 +22,52 @@ namespace Todo.Tests.Data
             var user = new User
             {
                 Id = 3,
+                Username = "test3",
+                Password = _password,
+                Email = "Test@test3.com",
+                Name = "User"
+            };
+
+            return user;
+        }
+
+        public static User GetUser_Duplicate_Id()
+        {
+            var user = new User
+            {
+                Id = 1,
+                Username = "test4",
+                Password = _password,
+                Email = "Test@test4.com",
+                Name = "User 4"
+            };
+
+            return user;
+        }
+
+        public static User GetUser_Duplicate_Username()
+        {
+            var user = new User
+            {
+                Id = 5,
                 Username = "test",
                 Password = _password,
+                Email = "Test@test5.com",
+                Name = "User 5"
+            };
+
+            return user;
+        }
+
+        public static User GetUser_Duplicate_Email()
+        {
+            var user = new User
+            {
+                Id = 6,
+                Username = "test6",
+                Password = _password,
                 Email = "Test@test.com",
-                Name = "User"
+                Name = "User 6"
             };
 
             return user;
@@ -49,7 +91,7 @@ namespace Todo.Tests.Data
                     Username = "test2",
                     Password = _password,
                     Email = "Test2@test.com",
-                    Name = "User2"
+                    Name = "User 2"
                 }
             };
 

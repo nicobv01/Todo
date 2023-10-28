@@ -86,5 +86,44 @@ namespace Todo.Tests.Repositories
             // Assert
             result.Should().BeFalse();
         }
+
+        [Fact]
+        public async Task Register_UserWithDuplicateId_ShouldBeFalse()
+        {
+            // Arrange
+            var user = UserMockData.GetUser_Duplicate_Id();
+
+            // Act
+            var result = await _authService.Register(user);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task Register_UserWithDuplicateUsername_ShouldBeFalse()
+        {
+            // Arrange
+            var user = UserMockData.GetUser_Duplicate_Username();
+
+            // Act
+            var result = await _authService.Register(user);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task Register_UserWithDuplicateEmail_ShouldBeFalse()
+        {
+            // Arrange
+            var user = UserMockData.GetUser_Duplicate_Email();
+
+            // Act
+            var result = await _authService.Register(user);
+
+            // Assert
+            result.Should().BeFalse();
+        }
     }
 }
