@@ -44,10 +44,14 @@ namespace Todo.API.Controllers
             return Ok();
         }
 
-        //PUT: api/item/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Item>> Put(int id, Item item)
+        //GET: api/item/5
+        [HttpPut("complete/{id}")]
+        public async Task<ActionResult<Item>> CompleteTask(int id)
         {
+            var result = await _itemRepository.CompleteTask(id);
+            if (!result)
+                return NotFound();
+
             return Ok();
         }
 
