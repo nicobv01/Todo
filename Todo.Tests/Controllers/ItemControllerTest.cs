@@ -100,5 +100,43 @@ namespace Todo.Tests.Controllers
                .Which.StatusCode.Should().Be(404);
         }
 
+        [Fact]
+        public async Task GetTask_WithCorrectID_ShouldReturn200Status()
+        {
+            // Arrange
+            var item_id = 1;
+            var item = ItemMockData.GetItemById(item_id);
+            var taskRepository = Substitute.For<IItemRepository>();
+            taskRepository.GetTask(item_id).Returns(item);
+            var controller = new ItemsController(taskRepository);
+
+            // Act
+            var result = await controller.GetTask(item_id);
+
+            // Assert
+            result.Should().BeOfType<ActionResult<Item>>();
+            result.As<ActionResult<Item>>().Result.Should().BeOfType<OkObjectResult>()
+               .Which.StatusCode.Should().Be(200);
+
+        }
+
+        [Fact]
+        public async Task GetTask_WithInvalidID_ShouldReturn404Status()
+        {
+            // Arrange
+            var item_id = 0;
+            var taskRepository = Substitute.For<IItemRepository>();
+            taskRepository.GetTask(item_id).Returns((Item)null);
+            var controller = new ItemsController(taskRepository);
+
+            // Act
+            var result = await controller.GetTask(item_id);
+
+            // Assert
+            result.Should().BeOfType<ActionResult<Item>>();
+            result.As<ActionResult<Item>>().Result.Should().BeOfType<NotFoundResult>()
+               .Which.StatusCode.Should().Be(404);
+        }
+
     }
 }
