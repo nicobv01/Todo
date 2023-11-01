@@ -82,5 +82,32 @@ namespace Todo.Tests.Repositories
             result.Should().BeFalse();
         }
 
+        [Fact]
+        public async Task GetTaskWithCorrectIDShouldRetornTask()
+        {
+            // Arrange
+            var item_id = 1;
+
+            // Act
+            var result = await _itemRepository.GetTask(item_id);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(item_id);
+        }
+
+        [Fact]
+        public async Task GetTaskWithWrongIDShouldRetornNull()
+        {
+            // Arrange
+            var item_id = 0;
+
+            // Act
+            var result = await _itemRepository.GetTask(item_id);
+
+            // Assert
+            result.Should().BeNull();
+        }
+
     }
 }
