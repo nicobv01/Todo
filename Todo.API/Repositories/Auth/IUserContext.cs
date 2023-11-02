@@ -1,7 +1,6 @@
-﻿namespace Todo.API.Repositories
+﻿namespace Todo.API.Repositories;
+
+public interface IUserContext
 {
-    public interface IUserContext
-    {
-        int GetCurrentUserId();
-    }
+    int GetCurrentUserId();
 }

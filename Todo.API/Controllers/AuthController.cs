@@ -2,41 +2,40 @@
 using Todo.API.Repositories;
 using Todo.API.Models;
 
-namespace Todo.API.Controllers
+namespace Todo.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class AuthController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    private readonly IAuthService _authService;
+
+    public AuthController(IAuthService authService)
     {
-        private readonly IAuthService _authService;
+        _authService = authService;
+    }
 
-        public AuthController(IAuthService authService)
-        {
-            _authService = authService;
-        }
+    // POST api/auth/login
+    [HttpPost("login")]
+    public IActionResult Login([FromBody] UserCredentials credentials)
+    {
+        var user = _authService.Authenticate(credentials.Username, credentials.Password);
 
-        // POST api/auth/login
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] UserCredentials credentials)
-        {
-            var user = _authService.Authenticate(credentials.Username, credentials.Password);
+        if (user == null)
+            return Unauthorized();
 
-            if (user == null)
-                return Unauthorized();
+        var token = _authService.GenerateJwtToken(user);
+        return Ok(new { Token = token });
+    }
 
-            var token = _authService.GenerateJwtToken(user);
-            return Ok(new { Token = token });
-        }
+    // POST api/auth/register
+    [HttpPost("register")]
+    public async Task<ActionResult<User>> Register(User user)
+    {
+        var result = await _authService.Register(user);
+        if (!result)
+            return BadRequest();
 
-        // POST api/auth/register
-        [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(User user)
-        {
-            var result = await _authService.Register(user);
-            if (!result)
-                return BadRequest();
-
-            return StatusCode(201);
-        }
+        return StatusCode(201);
     }
 }
