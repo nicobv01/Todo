@@ -19,7 +19,7 @@ public class AuthService : IAuthService
         _configuration = configuration;
     }
 
-    public User Authenticate(string username, string password)
+    public User? Authenticate(string username, string password)
     {
         var user = _context.Users.SingleOrDefault(u => u.Username == username);
 
@@ -38,11 +38,11 @@ public class AuthService : IAuthService
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new Claim[]
+            Subject = new ClaimsIdentity(new[]
             {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim("Username", user.Username.ToString()),
-            new Claim("Name", user.Name.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username.ToString()),
+                new Claim(ClaimTypes.Email, user.Email.ToString())
             }),
             Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),

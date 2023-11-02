@@ -4,7 +4,7 @@ namespace Todo.API.Repositories;
 
 public interface IAuthService
 {
-    User Authenticate(string username, string password);
+    User? Authenticate(string username, string password);
     string GenerateJwtToken(User user);
     Task<bool> Register(User user);
 }
