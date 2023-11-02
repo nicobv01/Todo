@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 
 namespace Todo.API.Repositories;
 
@@ -13,7 +14,10 @@ public class UserContext : IUserContext
 
     public int GetCurrentUserId()
     {
-        var userId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        var userId = int.TryParse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int resultado)
+        ? resultado
+        : 0;
+
         return userId;
     }
 }
