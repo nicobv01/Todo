@@ -34,7 +34,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Authenticate_ValidUser_ShouldSucceed()
+        public async Task Authenticate_ValidUser_ShouldSucceedAsync()
         {
             // Arrange
             var userCredentials = UserMockData.GetUserCredentials();
@@ -48,7 +48,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Authenticate_InvalidUser_ShouldFail()
+        public async Task Authenticate_InvalidUser_ShouldFailAsync()
         {
             // Arrange
             var userCredentials = UserMockData.GetUserCredentials();
@@ -61,7 +61,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Register_ValidUser_ShouldBeTrue()
+        public async Task Register_ValidUser_ShouldBeTrueAsync()
         {
             // Arrange
             var user = UserMockData.GetUser();
@@ -74,7 +74,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Register_InvalidUser_ShouldBeFalse()
+        public async Task Register_InvalidUser_ShouldBeFalseAsync()
         {
             // Arrange
             var user = UserMockData.GetUser();
@@ -88,7 +88,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Register_UserWithDuplicateId_ShouldBeFalse()
+        public async Task Register_UserWithDuplicateId_ShouldBeFalseAsync()
         {
             // Arrange
             var user = UserMockData.GetUser_Duplicate_Id();
@@ -101,7 +101,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Register_UserWithDuplicateUsername_ShouldBeFalse()
+        public async Task Register_UserWithDuplicateUsername_ShouldBeFalseAsync()
         {
             // Arrange
             var user = UserMockData.GetUser_Duplicate_Username();
@@ -114,7 +114,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Register_UserWithDuplicateEmail_ShouldBeFalse()
+        public async Task Register_UserWithDuplicateEmail_ShouldBeFalseAsync()
         {
             // Arrange
             var user = UserMockData.GetUser_Duplicate_Email();

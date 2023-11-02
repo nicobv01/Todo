@@ -34,7 +34,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Insert_ValidItem_ShouldSucceed()
+        public async Task Insert_ValidItem_ShouldSucceedAsync()
         {
             // Arrange
             var item = ItemMockData.GetItem();
@@ -47,7 +47,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Insert_InvalidItem_ShouldFail()
+        public async Task Insert_InvalidItem_ShouldFailAsync()
         {
             // Arrange
             var item = ItemMockData.GetItem();
@@ -60,7 +60,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task CompleteTask_ShouldSucceed()
+        public async Task CompleteTask_ShouldSucceedAsync()
         {
             // Arrange
             var item = ItemMockData.GetItemById(1);
@@ -73,7 +73,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task CompleteTask_InvalidItem_ShouldFail()
+        public async Task CompleteTask_InvalidItem_ShouldFailAsync()
         {
             // Act
             var result = await _itemRepository.CompleteTask(0);
@@ -83,7 +83,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetTaskWithCorrectIDShouldRetornTask()
+        public async Task GetTaskWithCorrectIDShouldRetornTaskAsync()
         {
             // Arrange
             var item_id = 1;
@@ -97,7 +97,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetTaskWithWrongIDShouldRetornNull()
+        public async Task GetTaskWithWrongIDShouldRetornNullAsync()
         {
             // Arrange
             var item_id = 0;
@@ -110,7 +110,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetTasks_ShouldRetornTasks()
+        public async Task GetTasks_ShouldRetornTasksAsync()
         {
             // Act
             var result = await _itemRepository.GetTasks();
@@ -121,7 +121,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task GetTasks_WithInvalidUserId_ShouldRetornNull()
+        public async Task GetTasks_WithInvalidUserId_ShouldRetornNullAsync()
         {
             // Arrange
             var userContext = new UserContextFake();
