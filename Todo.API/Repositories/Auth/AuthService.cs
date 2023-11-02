@@ -19,7 +19,7 @@ public class AuthService : IAuthService
         _configuration = configuration;
     }
 
-    public User Authenticate(string username, string password)
+    public User? Authenticate(string username, string password)
     {
         var user = _context.Users.SingleOrDefault(u => u.Username == username);
 
