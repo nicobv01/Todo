@@ -7,5 +7,6 @@ namespace Todo.API.Repositories
         Task<bool> Insert(Item item);
         Task<bool> CompleteTask(int id);
         Task<Item> GetTask(int item_id);
+        Task<IEnumerable<Item>> GetTasks();
     }
 }

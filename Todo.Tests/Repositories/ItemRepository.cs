@@ -109,5 +109,30 @@ namespace Todo.Tests.Repositories
             result.Should().BeNull();
         }
 
+        [Fact]
+        public async Task GetTasks_ShouldRetornTasks()
+        {
+            // Act
+            var result = await _itemRepository.GetTasks();
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Count().Should().Be(2);
+        }
+
+        [Fact]
+        public async Task GetTasks_WithInvalidUserId_ShouldRetornNull()
+        {
+            // Arrange
+            var userContext = new UserContextFake();
+            userContext.userId = 5;
+            var itemRepository = new ItemRepository(_context, userContext);
+
+            // Act
+            var result = await itemRepository.GetTasks();
+
+            // Assert
+            result.Should().BeEmpty();
+        }
     }
 }

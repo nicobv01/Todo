@@ -3,6 +3,7 @@ using Todo.API.Data;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Todo.API.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Todo.API.Repositories
 {
@@ -59,6 +60,15 @@ namespace Todo.API.Repositories
             }
 
             return item;
+        }
+
+        public async Task<IEnumerable<Item>> GetTasks()
+        {
+            var UserId = _userContext.GetCurrentUserId();
+
+            var items = await _context.Items.Where(x => x.UserId == UserId).ToListAsync();
+
+            return items;
         }
     }
 }

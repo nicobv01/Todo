@@ -9,9 +9,10 @@ namespace Todo.Tests.Data
 {
     public class UserContextFake : IUserContext
     {
+        public int userId { get; set; } = 1;
         public int GetCurrentUserId()
         {
-            return 1;
+            return userId;
         }
     }
 }
