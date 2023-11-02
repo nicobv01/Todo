@@ -138,5 +138,22 @@ namespace Todo.Tests.Controllers
                .Which.StatusCode.Should().Be(404);
         }
 
+        [Fact]
+        public async Task GetAllTaksOfOneUser_ShouldReturn200StatusCode()
+        {
+            // Arrange
+            var item = ItemMockData.GetItem();
+            var taskRepository = Substitute.For<IItemRepository>();
+            taskRepository.GetTasks().Returns(new List<Item> { item });
+            var controller = new ItemsController(taskRepository);
+
+            // Act
+            var result = await controller.Get();
+
+            // Assert
+            result.Should().BeOfType<ActionResult<IEnumerable<Item>>>();
+            result.As<ActionResult<IEnumerable<Item>>>().Result.Should().BeOfType<OkObjectResult>()
+               .Which.StatusCode.Should().Be(200);
+        }
     }
 }
