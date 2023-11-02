@@ -34,14 +34,19 @@ namespace Todo.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Item>>> Get()
         {
-            return Ok();
+            var items = await _itemRepository.GetTasks();
+            return Ok(items);
         }
 
         //GET: api/item/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Item>> GetById(int id)
         {
-            return Ok();
+            var item = await _itemRepository.GetTask(id);
+            if (item == null)
+                return NotFound();
+
+            return Ok(item);
         }
 
         //GET: api/item/complete/5

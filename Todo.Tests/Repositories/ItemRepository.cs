@@ -5,6 +5,7 @@ using Todo.API.Repositories;
 using Todo.Tests.Data;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Todo.API.Models;
 
 namespace Todo.Tests.Repositories
 {
@@ -34,7 +35,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Insert_ValidItem_ShouldSucceed()
+        public async Task Insert_ValidItem_ShouldSucceedAsync()
         {
             // Arrange
             var item = ItemMockData.GetItem();
@@ -47,7 +48,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task Insert_InvalidItem_ShouldFail()
+        public async Task Insert_InvalidItem_ShouldFailAsync()
         {
             // Arrange
             var item = ItemMockData.GetItem();
@@ -60,7 +61,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task CompleteTask_ShouldSucceed()
+        public async Task CompleteTask_ShouldSucceedAsync()
         {
             // Arrange
             var item = ItemMockData.GetItemById(1);
@@ -73,7 +74,7 @@ namespace Todo.Tests.Repositories
         }
 
         [Fact]
-        public async Task CompleteTask_InvalidItem_ShouldFail()
+        public async Task CompleteTask_InvalidItem_ShouldFailAsync()
         {
             // Act
             var result = await _itemRepository.CompleteTask(0);
@@ -82,5 +83,57 @@ namespace Todo.Tests.Repositories
             result.Should().BeFalse();
         }
 
+        [Fact]
+        public async Task GetTaskWithCorrectIDShouldRetornTaskAsync()
+        {
+            // Arrange
+            var item_id = 1;
+
+            // Act
+            var result = await _itemRepository.GetTask(item_id);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(item_id);
+        }
+
+        [Fact]
+        public async Task GetTaskWithWrongIDShouldRetornNullAsync()
+        {
+            // Arrange
+            var item_id = 0;
+
+            // Act
+            var result = await _itemRepository.GetTask(item_id);
+
+            // Assert
+            result.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task GetTasks_ShouldRetornTasksAsync()
+        {
+            // Act
+            var result = await _itemRepository.GetTasks();
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Count().Should().Be(2);
+        }
+
+        [Fact]
+        public async Task GetTasks_WithInvalidUserId_ShouldRetornNullAsync()
+        {
+            // Arrange
+            var userContext = new UserContextFake(5);
+
+            var itemRepository = new ItemRepository(_context, userContext);
+
+            // Act
+            var result = await itemRepository.GetTasks();
+
+            // Assert
+            result.Should().BeEmpty();
+        }
     }
 }

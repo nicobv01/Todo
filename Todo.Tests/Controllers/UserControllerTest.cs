@@ -44,7 +44,7 @@ namespace Todo.Tests.Controllers
         }
 
         [Fact]
-        public async Task Register_ShouldReturn201Status()
+        public async Task Register_ShouldReturn201StatusAsync()
         {
             // Arrange
             var user = UserMockData.GetUser();
@@ -62,7 +62,7 @@ namespace Todo.Tests.Controllers
         }
 
         [Fact]
-        public async Task Register_ShouldReturn400Status()
+        public async Task Register_ShouldReturn400StatusAsync()
         {
             // Arrange
             var user = UserMockData.GetUser();
