@@ -5,6 +5,7 @@ using Todo.API.Repositories;
 using Todo.Tests.Data;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Todo.API.Models;
 
 namespace Todo.Tests.Repositories
 {
@@ -124,8 +125,8 @@ namespace Todo.Tests.Repositories
         public async Task GetTasks_WithInvalidUserId_ShouldRetornNullAsync()
         {
             // Arrange
-            var userContext = new UserContextFake();
-            userContext.userId = 5;
+            var userContext = new UserContextFake(5);
+
             var itemRepository = new ItemRepository(_context, userContext);
 
             // Act

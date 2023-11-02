@@ -10,6 +10,13 @@ namespace Todo.Tests.Data
     public class UserContextFake : IUserContext
     {
         public int userId { get; set; } = 1;
+
+        public UserContextFake() { }
+
+        public UserContextFake(int id) 
+        {
+            userId = id;
+        }
         public int GetCurrentUserId()
         {
             return userId;
