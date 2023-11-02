@@ -49,7 +49,7 @@ namespace Todo.API.Repositories
             return true;
         }
 
-        public async Task<Item> GetTask(int id)
+        public async Task<Item>? GetTask(int id)
         {
             var UserId = _userContext.GetCurrentUserId();
 
