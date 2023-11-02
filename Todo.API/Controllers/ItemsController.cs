@@ -41,7 +41,11 @@ namespace Todo.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Item>> GetById(int id)
         {
-            return Ok();
+            var item = await _itemRepository.GetTask(id);
+            if (item == null)
+                return NotFound();
+
+            return Ok(item);
         }
 
         //GET: api/item/complete/5

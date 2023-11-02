@@ -111,7 +111,7 @@ namespace Todo.Tests.Controllers
             var controller = new ItemsController(taskRepository);
 
             // Act
-            var result = await controller.GetTask(item_id);
+            var result = await controller.GetById(item_id);
 
             // Assert
             result.Should().BeOfType<ActionResult<Item>>();
@@ -130,7 +130,7 @@ namespace Todo.Tests.Controllers
             var controller = new ItemsController(taskRepository);
 
             // Act
-            var result = await controller.GetTask(item_id);
+            var result = await controller.GetById(item_id);
 
             // Assert
             result.Should().BeOfType<ActionResult<Item>>();
