@@ -54,4 +54,4 @@ jobs:
           app-name: 'storerd'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5FD3498149214EAE8C43E8DC5EA36FAB }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_37757E7059F64DB5847B2C7347C175F9 }}
