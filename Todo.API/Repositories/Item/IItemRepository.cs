@@ -8,4 +8,5 @@ public interface IItemRepository
     Task<bool> CompleteTask(int id);
     Task<Item>? GetTask(int item_id);
     Task<IEnumerable<Item>> GetTasks();
+    Task<bool> Delete(int id);
 }

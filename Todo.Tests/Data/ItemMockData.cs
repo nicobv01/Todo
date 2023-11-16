@@ -11,7 +11,7 @@ public class ItemMockData
         {
             Id = 3,
             Title = "Test Item",
-            IsDone = false,
+            IsDone = "0",
             UserId = 1
         };
 
@@ -32,14 +32,14 @@ public class ItemMockData
             {
                 Id = 1,
                 Title = "Test item",
-                IsDone = false,
+                IsDone = "0",
                 UserId = 1
             },
             new Item
             {
                 Id = 2,
                 Title = "Test item 2",
-                IsDone = false,
+                IsDone = "0",
                 UserId = 1
             }
         };

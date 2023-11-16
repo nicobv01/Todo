@@ -10,7 +10,7 @@ public class Item
     [Required]
     public string? Title { get; set; }
     [Required]
-    public bool IsDone { get; set; }
+    public string IsDone { get; set; }
     [Required]
     public int UserId { get; set; }
 }

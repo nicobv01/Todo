@@ -43,7 +43,7 @@ public class ItemRepository : IItemRepository
             return false;
         }
 
-        item.IsDone = true;
+        item.IsDone = "1";
         await _context.SaveChangesAsync();
 
         return true;
@@ -69,5 +69,21 @@ public class ItemRepository : IItemRepository
         var items = await _context.Items.Where(x => x.UserId == UserId).ToListAsync();
 
         return items;
+    }
+
+    public async Task<bool> Delete(int id)
+    {
+        var UserId = _userContext.GetCurrentUserId();
+
+        var item = await _context.Items.FindAsync(id);
+        if (item == null || UserId != item.UserId)
+        {
+            return false;
+        }
+
+        _context.Items.Remove(item);
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 }
